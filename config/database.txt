@@ -1,0 +1,11 @@
+CREATE DATABASE infonete;
+
+USE infonete;
+
+CREATE TABLE infonete.usuarios (
+    id INT NOT NULL AUTO_INCREMENT ,
+    username VARCHAR(20) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL ,
+    password VARCHAR(40) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL ,
+    role VARCHAR(40) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL ,
+    PRIMARY KEY (id)
+) ENGINE = InnoDB;

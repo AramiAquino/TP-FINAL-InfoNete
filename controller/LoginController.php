@@ -2,12 +2,7 @@
 
 class LoginController{
     private $render;
-    private $view;
     private $model;
-/*
-    public function __construct($render){
-        $this->render = $render;
-    }*/
 
     public function __construct($render, $model){
         $this->render = $render;

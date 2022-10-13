@@ -28,7 +28,7 @@ class Configuration{
     }
 
     public function getRender(){
-        return new Render('view/partial');
+        return new Render($this, "home", "list");
     }
 
     /*

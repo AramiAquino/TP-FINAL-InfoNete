@@ -2,8 +2,11 @@
 
 class Render{
     private $mustache;
+    private $viewFolder;
 
-    public function __construct($partialsPathLoader){
+    public function __construct($viewFolder, $partialsPathLoader){
+        $this->viewFolder = $viewFolder;
+
         Mustache_Autoloader::register();
         $this->mustache = new Mustache_Engine(
             array(
@@ -11,8 +14,8 @@ class Render{
         ));
     }
 
-    public function render($contentFile , $data = array() ){
-        $contentAsString =  file_get_contents($contentFile);
-        return  $this->mustache->render($contentAsString, $data);
+    public function render($viewName , $datos = array() ){
+        $contentAsString =  file_get_contents($this->viewFolder . $viewName);
+        echo $this->mustache->render($contentAsString, $datos);
     }
 }

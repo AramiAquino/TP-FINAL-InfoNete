@@ -2,53 +2,49 @@
 include_once ("helper/Redirect.php");
 include_once("helper/MysqlDatabase.php");
 include_once("helper/Render.php");
-include_once("helper/UrlHelper.php");
+include_once("Router.php");
 
 include_once("model/LoginModel.php");
 
+include_once("controller/InfoneteController.php");
 include_once("controller/LoginController.php");
 
 include_once('third-party/mustache/src/Mustache/Autoloader.php');
-include_once("Router.php");
+
 
 class Configuration{
 
-    private function getDatabase(){
-        $config = $this->getConfig();
-        return new MysqlDatabase(
-            $config["servername"],
-            $config["username"],
-            $config["password"],
-            $config["dbname"]
-        );
+    private $database;
+    private $view;
+
+    public function __construct(){
+        $this->database = new MysqlDatabase();
+        $this->view = new Render("view/", "view/partial/");
     }
 
-    private function getConfig(){
-        return parse_ini_file("config/config.ini");
+    private function getInfoneteController(){
+        return new InfoneteController($this->view);
     }
-
-    public function getRender(){
-        return new Render($this, "home", "list");
-    }
-
-    /*
-    public function getLoginController(){
-        return new LoginController($this->getRender());
-    }*/
 
     public function getLoginController(){
-        return new LoginController($this->getRender(), $this->getLoginModel());
+        return new LoginController($this->view, $this->getLoginModel());
     }
 
-    public function getLoginModel(){
+    public function getRegistroController(){
+        return new RegistroController($this->view, $this->getRegistroModel());
+    }
+
+    private function getLoginModel(){
         return new LoginModel($this->database);
     }
 
-    public function getRouter(){
-        return new Router($this);
+    private function getRegistroModel(){
+        return new RegistroModel($this->database);
     }
 
-    public function getUrlHelper(){
-        return new UrlHelper();
+    public function getRouter(){
+        //Se llama a si mismo para referenciarse
+        return new Router($this, "infonete", "list");
     }
+
 }

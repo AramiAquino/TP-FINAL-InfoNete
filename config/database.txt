@@ -4,8 +4,13 @@ USE infonete;
 
 CREATE TABLE infonete.usuarios (
     id INT NOT NULL AUTO_INCREMENT ,
-    username VARCHAR(20) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL ,
+    mail VARCHAR(20) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL ,
     password VARCHAR(40) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL ,
     role VARCHAR(40) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL ,
     PRIMARY KEY (id)
 ) ENGINE = InnoDB;
+
+ALTER TABLE usuarios ADD ubicacion VARCHAR(100) CHARACTER SET latin1 COLLATE latin1_spanish_ci NULL DEFAULT NULL AFTER password;
+
+INSERT INTO usuarios (id, mail, password, ubicacion, role) VALUES ('1', 'jannett.aquino2106@gmail.com', '12345', '-34.670713, -58.563427', 'contenidista');
+INSERT INTO usuarios (id, mail, password, ubicacion, role) VALUES ('2', 'jannett.aquino2106@gmail.com', '12345', '-34.670713, -58.563427', 'administrador');

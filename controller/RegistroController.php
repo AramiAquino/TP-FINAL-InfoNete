@@ -1,6 +1,6 @@
 <?php
 
-class LoginController{
+class RegistroController{
     private $renderer;
     private $model;
 
@@ -10,22 +10,20 @@ class LoginController{
     }
     public function list(){
         echo "nada";
-        /* $data['login'] = $this->model->getLogin();
-
-         $this->renderer->render('loginForm.mustache', $data);*/
     }
 
     public function alta(){
-        echo $this->renderer->render("loginForm.mustache");
+        echo $this->renderer->render("registroForm.mustache");
     }
 
     public function procesarAlta(){
-        $username = $_POST["username"];
+        $mail = $_POST["username"];
         $password  = $_POST["password"];
+        $ubicacion  = $_POST["ubicacion"];
 
-        $this->model->alta($username, $password);
+        $this->model->alta($mail, $password, $ubicacion);
 
         //LLEVA A LA HOME
-       // Redirect::redirect('/');
+        Redirect::redirect('/');
     }
 }

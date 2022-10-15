@@ -1,0 +1,26 @@
+{{> header}}
+
+<div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="band">
+    <h1>Registro</h1>
+    <form action="registro/procesarAlta">
+        <div>
+          <label for="username">Username: </label>
+          <input id="username" type="text" name="username">
+        </div>
+
+        <div>
+          <label for="password">Password: </label>
+          <input id="password" type="password" name="password">
+        </div>
+
+        <div>
+            <label for="ubicacion">Ubicacion: </label>
+            <input id="ubicacion" type="text" name="ubicacion" placeholder="Ingrese las coordenadas de google maps">
+        </div>
+
+        <button type="submit">Enviar</button>
+
+    </form>
+</div>
+
+{{> footer}}

@@ -10,9 +10,6 @@ class LoginController{
     }
     public function list(){
         echo "nada";
-        /* $data['login'] = $this->model->getLogin();
-
-         $this->renderer->render('loginForm.mustache', $data);*/
     }
 
     public function alta(){
@@ -26,6 +23,6 @@ class LoginController{
         $this->model->alta($username, $password);
 
         //LLEVA A LA HOME
-       // Redirect::redirect('/');
+        //Redirect::redirect('/');
     }
 }

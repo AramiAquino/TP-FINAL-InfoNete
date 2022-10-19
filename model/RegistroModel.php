@@ -13,9 +13,9 @@ class RegistroModel
         //DEFINIMOS EL ROL PARA CUALQUIER USUARIO NUEVO
         $roleGeneral = 'lector';
         //CREAMOS UN HASH PARA QUE LA CONTRASEÑA SEA SEGURA
-        $hash = password_hash($password, PASSWORD_DEFAULT);
+        //$hash = password_hash($password, PASSWORD_DEFAULT);
 
-        $sql = "INSERT INTO usuarios (mail, password,ubicacion, role) VALUES('$mail', '$hash', '$ubicacion', '$roleGeneral')";
+        $sql = "INSERT INTO usuarios (mail, password,ubicacion, role) VALUES('$mail', '$password', '$ubicacion', '$roleGeneral')";
 
         return $this->database->execute($sql);
 

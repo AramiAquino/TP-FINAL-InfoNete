@@ -13,12 +13,18 @@ class LoginModel
         $sql = "SELECT * FROM usuarios";
 
         while($result = $this->database->query($sql)){
-            //PASSWORD_VERIFY ES UNA FUNCION QUE COMPARA CONTRASEÑAS CON HASH
-            if($result['mail'] == $username && password_verify($password, $result['password'])){
-                Redirect::redirect('infonete');
+
+            if($result['mail'] == $username && $password == $result['password']){//$this->getPasswordValido($password, $result['password'])){
+                Redirect::redirect('/');
             }else{
-                Redirect::redirect('loginForm');
+                Redirect::redirect('login/alta');
             }
         }
     }
+
+    /*
+        public function getPasswordValido($hash, $valid){
+            //PASSWORD_VERIFY ES UNA FUNCION QUE COMPARA CONTRASEÑAS CON HASH
+            return password_verify($hash, $valid);
+        }*/
 }

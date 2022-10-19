@@ -1,3 +1,38 @@
+
+
+//NORMALIZAR LA TABLA, SACAR EL PASSWORD -> usuario(id), clave y vencimiento
+
+//en usuario -> agregar estado (activo, inactivo)
+
+//roles-> lector, escritor, editor, administrador
+//estado-> draft, publicar, publicado, baja
+
+//la publicacion-> producto(id, tipo, nombre, idTipo) | tipo(id, nombre) revista, diario, etc
+// ME PUEDO SUSCRIBIR A 1 PRODUCTO POR X CANTIDAD DE TIEMPO O COMPRO UNA EDICION, PUEDE SER UNA EDICION VIEJA
+
+// edicion (id, edicion, precio, idProducto) | edicion_seccion(idEdicion, idSeccion) | secciones(id, descripcion)
+
+//articulos(id, idEdicion, idSeccion) ->relacion ternaria | un articulo tiene una seccion y una edicion
+
+//PARA LOS ARCHIVOS PONERLE UN LIMITE DE 5
+
+
+
+//PARA QUE LEVANTE LA PAGINA -> IR A httpd.conf
+DocumentRoot "C:/xampp/htdocs/TP-FINAL-InfoNete-main"
+<Directory "C:/xampp/htdocs/TP-FINAL-InfoNete-main">
+
+<Directory />
+    AllowOverride all
+    Require all denied
+</Directory>
+
+
+
+
+
+---------------NUEVA DATABASE----------------
+
 CREATE DATABASE infonete;
 
 USE infonete;
@@ -11,6 +46,59 @@ CREATE TABLE infonete.usuarios (
 ) ENGINE = InnoDB;
 
 ALTER TABLE usuarios ADD ubicacion VARCHAR(100) CHARACTER SET latin1 COLLATE latin1_spanish_ci NULL DEFAULT NULL AFTER password;
+ALTER TABLE usuarios ADD nombre VARCHAR(50) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL AFTER id;
+ALTER TABLE usuarios ADD estado INT(1) NOT NULL DEFAULT '0' AFTER role;
+ALTER TABLE usuarios CHANGE password password INT(7) NOT NULL;
 
-INSERT INTO usuarios (id, mail, password, ubicacion, role) VALUES ('1', 'jannett.aquino2106@gmail.com', '12345', '-34.670713, -58.563427', 'contenidista');
-INSERT INTO usuarios (id, mail, password, ubicacion, role) VALUES ('2', 'jannett.aquino2106@gmail.com', '12345', '-34.670713, -58.563427', 'administrador');
+CREATE TABLE infonete.passwords (
+    id INT(7) NOT NULL AUTO_INCREMENT ,
+    clave TEXT CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL ,
+    verificado VARCHAR(50) CHARACTER SET latin1 COLLATE latin1_spanish_ci NULL DEFAULT NULL ,
+    vencimiento DATE NOT NULL DEFAULT CURRENT_TIMESTAMP ,
+    PRIMARY KEY (id)
+) ENGINE = InnoDB;
+
+ALTER TABLE usuarios ADD FOREIGN KEY (password) REFERENCES passwords(id);
+
+CREATE TABLE infonete.tipo (
+    id INT NOT NULL AUTO_INCREMENT ,
+    descripcion VARCHAR(50) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL ,
+    PRIMARY KEY (id)
+) ENGINE = InnoDB;
+
+INSERT INTO tipo (descripcion) VALUES ('revista');
+INSERT INTO tipo (descripcion) VALUES ('diario');
+
+CREATE TABLE infonete.producto (
+    id INT(7) NOT NULL AUTO_INCREMENT ,
+    nombre VARCHAR(50) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL ,
+    tipo INT(7) NOT NULL ,
+    PRIMARY KEY (id)
+) ENGINE = InnoDB;
+
+ALTER TABLE producto ADD FOREIGN KEY (tipo) REFERENCES tipo(id);
+
+CREATE TABLE infonete.edicion (
+    id INT(7) NOT NULL AUTO_INCREMENT ,
+    edicion VARCHAR(100) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL ,
+    precio DOUBLE NOT NULL ,
+    producto INT(7) NOT NULL ,
+    PRIMARY KEY (id)
+) ENGINE = InnoDB;
+
+ALTER TABLE edicion ADD FOREIGN KEY (producto) REFERENCES producto(id);
+
+CREATE TABLE infonete.seccion (
+    id INT(7) NOT NULL AUTO_INCREMENT ,
+    descripcion VARCHAR(100) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL ,
+    PRIMARY KEY (id)
+) ENGINE = InnoDB;
+
+CREATE TABLE infonete.edicion_seccion (
+    edicion INT(7) NOT NULL ,
+    seccion INT(7) NOT NULL
+) ENGINE = InnoDB;
+
+ALTER TABLE edicion_seccion ADD FOREIGN KEY (edicion) REFERENCES edicion(id);
+ALTER TABLE edicion_seccion ADD FOREIGN KEY (seccion) REFERENCES seccion(id);
+

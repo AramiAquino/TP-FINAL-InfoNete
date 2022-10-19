@@ -1,28 +1,33 @@
 <?php
+class MySQlDatabase {
+    private $conexion;
 
-class MysqlDatabase{
-    private $connection;
+    public function __construct($host_param = null,$user_param= null,$pass_param= null,$db_param= null) {
+        $config = parse_ini_file("config/config.ini");
 
-    public function __construct($servername, $username, $password, $dbname){
-        $conn = mysqli_connect(
-            $servername,
-            $username,
-            $password,
-            $dbname
-        );
+        $host = $host_param ?:  $config['host'];
+        $user = $user_param ?: $config['user'];
+        $pass = $pass_param ?:  $config['pass'];
+        $db = $db_param ?: $config['db'];
 
-        if (!$conn) {
-            die("Connection failed: " . mysqli_connect_error());
-        }
-        $this->connection = $conn;
+        $this->conexion = new mysqli(
+            $host,
+            $user,
+            $pass,
+            $db);
     }
 
-    public function query($sql){
-        $result = mysqli_query($this->connection, $sql);
-        return mysqli_fetch_all($result,MYSQLI_ASSOC);
+    public function __destruct() {
+        $this->conexion->close();
     }
 
-    public function execute($sql){
-        mysqli_query($this->connection, $sql);
+    public function query($sql) {
+        $respuesta = $this->conexion->query($sql);
+        return $respuesta->fetch_all(MYSQLI_ASSOC);
     }
+
+    public function execute($sql) {
+        $this->conexion->query($sql);
+    }
+
 }

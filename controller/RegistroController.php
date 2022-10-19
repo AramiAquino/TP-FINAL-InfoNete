@@ -21,9 +21,13 @@ class RegistroController{
         $password  = $_POST["password"];
         $ubicacion  = $_POST["ubicacion"];
 
-        $this->model->alta($mail, $password, $ubicacion);
+        if($this->model->alta($mail, $password, $ubicacion)){
+            //LLEVA A LA HOME
+            Redirect::redirect('/');
+        }else{
+            Redirect::redirect('/alta');
+        }
 
-        //LLEVA A LA HOME
-        Redirect::redirect('/');
+
     }
 }

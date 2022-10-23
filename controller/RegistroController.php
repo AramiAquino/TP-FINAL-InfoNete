@@ -17,15 +17,15 @@ class RegistroController{
     }
 
     public function procesarAlta(){
-        $mail = $_POST["username"];
+        $name = $_POST["name"];
+        $email = $_POST["email"];
         $password  = $_POST["password"];
-        $ubicacion  = $_POST["ubicacion"];
+        $residencia  = $_POST["residencia"];
 
-        if($this->model->alta($mail, $password, $ubicacion)){
-            //LLEVA A LA HOME
+        if($this->model->alta($name, $email, $password, $residencia)){
             Redirect::redirect('/');
         }else{
-            Redirect::redirect('/alta');
+            Redirect::redirect('/registro/alta');
         }
 
 

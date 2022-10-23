@@ -22,7 +22,20 @@ class LoginController{
 
         $this->model->alta($username, $password);
 
-        //LLEVA A LA HOME
-        //Redirect::redirect('/');
+        if($_SESSION['usuario'] == 'lector'){
+            Redirect::redirect('/noticias');
+        }
+
+        if($_SESSION['usuario'] == 'administrador'){
+            Redirect::redirect('/');
+        }
+
+        if($_SESSION['usuario'] == 'contenidista'){
+            Redirect::redirect('/');
+        }
+
+        if($_SESSION['usuario'] == 'editor'){
+            Redirect::redirect('/');
+        }
     }
 }
